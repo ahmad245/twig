@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block title %}twig  show global variable{% endblock %}
+
+{% block body %}
+ 
+ <h1>here is curent local  we are defined in AppExtentions and implements GlobalsInterface  {{locale}}</h1>
+ <h1>here is curent message from parameter we are defined in sevices.yaml {{message}}</h1>
+ <h1>here is my name we are defined in twig.yaml {{myName}}</h1>
+
+ <h1>app.environment ' {{app.environment}} '</h1>
+ <h1>app.user ' {{app.user}} '</h1>
+ <h1>app.request ' {{app.request}} '</h1>
+ <h1>app.request.query.get('id') ' {{app.request.query.get('id')}} '</h1>
+ <h1>app.debug  if app is runing in debug mode  ' {{app.debug}} '</h1>
+ <h1>app.session ' {{app.session.isStarted()}} '</h1>
+{% endblock %}
