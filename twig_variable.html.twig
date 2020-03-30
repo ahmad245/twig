@@ -30,7 +30,13 @@
 
     {# is_granted('role') #}
     {% if is_granted('Role_user') %}
-      {# make some think #}
+       make some think 
     {% endif %}
+
+    {# logout_path #}
+    <a href="{{logout_path()}}">logout</a>
+
+
+
     
 {% endblock %}
