@@ -13,4 +13,17 @@
  <h1>app.request.query.get('id') ' {{app.request.query.get('id')}} '</h1>
  <h1>app.debug  if app is runing in debug mode  ' {{app.debug}} '</h1>
  <h1>app.session ' {{app.session.isStarted()}} '</h1>
+
+    {# error messages #}
+  {% for message in app.flashes('messageName') %}
+       {{message}}
+  {% endfor %}
+  {# error messages with label #}
+  {% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endfor %}
 {% endblock %}
