@@ -26,4 +26,10 @@
         </div>
     {% endfor %}
     {% endfor %}
+
+    {# is_granted('role') #}
+    {% if is_granted('Role_user') %}
+      {# make some think #}
+    {% endif %}
+    
 {% endblock %}
