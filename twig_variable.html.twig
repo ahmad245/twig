@@ -38,7 +38,7 @@
 
 
 
-
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
      {# 1 -Variable declaration #}
      {% set fooA = "foo" %}
      {% set fooB = [1,2,3] %}
@@ -57,11 +57,11 @@ or myVariable.my.property) you'll need to use the attribute function to access i
 
    {{ attribute(myVariable, 'my.property') }}
 
-
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 {# 2 -String interpolation #}
  {% set name = "aaa" %}
  {{ "hi #{name} , how are you" }}
-
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 {# 3 -The loop variable inside a for loop and else tag #}
   {% for item in items %}
       {% if loop.last %}
@@ -78,7 +78,7 @@ or myVariable.my.property) you'll need to use the attribute function to access i
         <li><em>no users available</em></li>
     {% endfor %}
 </ul>
-
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 {# 4 -iterable  #}
 {% if users is iterable %}
   {% for user in users %}
@@ -88,7 +88,7 @@ or myVariable.my.property) you'll need to use the attribute function to access i
     {# users is probably a string #}
     Hello {{ users }}!
 {% endif %}
-
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 {# 5- Sometimes, when using nested loops, you need to access the parent context. 
 The parent context is always accessible via the loop.parent variable. For instance, if you have the following template data: #}
 
@@ -107,6 +107,89 @@ The parent context is always accessible via the loop.parent variable. For instan
       
   {% endfor %}
 
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# 6 - Twig supports Regular Expressions #}
+{% if "ahmad" starts  with 'a' %}{% endif %}
+{% if "almasri" ends  with 'i' %}{% endif %}
+{% if "mail@mail.com" matches '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/' %}
+    {{"Is a valid mail"}}
+{% else %}
+    {{"It doesn't seems to be a valid mail buddy."}}
+{% endif %}
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+ {# 7_ Control the spaces when you print variables #}
+{% for i in 1..10 %}
+    {# Note the - symbol at the beginning and the end of the print tag #}
+    {{- i -}}
+{% endfor %}
 
+{# Outputs :
+    12345678910
+#}
+
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# 8 -The date_modify filter modifies a date with a given modifier string : #}
+{{"now"|date_modify("+1 month")|date('Y-m-d')}}
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# 9-Limit string length #}
+{% set myTextVariable = "A semi long string"%}
+
+{{myTextVariable|slice(0,10)}} {# Outputs : A semi lon #}
+
+{# If the string length > 50, then cut it and append 3 dots .... | otherwise just print the text.#}
+{{ myTextVariable|length > 50 ? myTextVariable|slice(0, 10) ~ '...' : myTextVariable }}
+
+{# Which is the same as : #}
+{% if myTextVariable|length > 50 %}
+    {{ myTextVariable|slice(0, 10) ~ '...'}}
+{% else %}
+    {{ myTextVariable }}
+{% endif %}
+
+
+{# 10-Use macro #}
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# Macros are comparable with functions in regular programming languages. They are useful to put often used HTML idioms into reusable elements to not repeat yourself.
+Basically and theoretically: is a type of self-written twig function which outputs custom html according to received parameters. #}
+{% import "forms.html" as forms %}
+or 
+{% import _self as forms %}
+
+{% macro input(name, value, type, size) %}
+    <div class="form-group">
+        <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+    </div>
+{% endmacro %}
+
+{% import _self as forms %}
+
+<form action="register.php" method="post">
+    {{forms.input("frm_username",null,"text")}}
+    {{forms.input("frm_password",null,"password")}}
+    {{forms.input("frm_email",null,"email")}}
+    {{forms.input("frm_birthday",null,"date")}}
+    {{forms.input("frm_submit","Register","submit")}}
+</form>
+
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{#11 - How to concatenate strings in Twig #}
+{{"Hello " ~ app.user.username ~ " how are you today?"}}
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# 12- How to check if a variable exists #}
+{% if variable is defined %}
+    {{- "Variable exists :" ~ variable -}}
+{% endif %}
+{# 12 How to check if a string or array contains a value #}
+{% set mytext = "hello how are you today" %}
+
+{% set myarray = ["Hello",12,15,"other string"] %}
+
+{% if "hello" in mytext %}
+    {{"'hello' has been found in the string"}}
+{% endif %}
+
+{% if "Hello" or 12 in myarray %}
+    {{"15 or hello found in array"}}
+{% endif %}
 
 {% endblock %}
