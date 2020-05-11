@@ -192,4 +192,62 @@ or
     {{"15 or hello found in array"}}
 {% endif %}
 
+
+
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# 13 -How to print safely a string variable from Twig in JavaScript #}
+{% set varUsedInJavascript = "ahmad" %}
+{% set varUsedInJavascript2 = "ahmad,
+this is may new line
+" %}
+
+{# // will throw un exeption  #}
+<script>
+    var userName = "{{- varUsedInJavascript -}}";
+    var description = "{{- varUsedInJavascript2-}}";
+</script>
+
+<script>
+    var userName = "{{- varUsedInJavascript|escape("js") -}}";
+    var description = "{{- varUsedInJavascript2|escape("js") -}}";
+</script>
+{# Printing arrays to json safely #}
+
+{% set myData = {
+    "a": "Complex String Data",
+    "b": 12345,
+    "c": "Hello,
+        Multiline String
+    "
+}%}
+
+<script>
+    var myData = {{ myData|json_encode()|row }};
+</script>
+
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{#14-  For convenience sake of this snippet, store the errors in a variable #}
+{% set formErrors = MyFormVariable.vars.errors.form.getErrors(true) %}
+                                    
+{# If there are errors in the form, display them in this unorganized list #}
+{% if formErrors|length %}
+    <ul>
+        {% for error in formErrors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+
+{# VARIABLE	DESCRIPTION
+loop.index	The current iteration of the loop. (1 indexed)
+loop.index0	The current iteration of the loop. (0 indexed)
+loop.revindex	The number of iterations from the end of the loop (1 indexed)
+loop.revindex0	The number of iterations from the end of the loop (0 indexed)
+loop.first	True if first iteration
+loop.last	True if last iteration
+loop.length	The number of items in the sequence
+loop.parent	The parent context #}
 {% endblock %}
