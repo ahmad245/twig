@@ -37,7 +37,9 @@
     <a href="{{logout_path()}}">logout</a>
 
 
-     {# Variable declaration #}
+
+
+     {# 1 -Variable declaration #}
      {% set fooA = "foo" %}
      {% set fooB = [1,2,3] %}
      {% set fooC = {
@@ -45,11 +47,66 @@
            "age":33,
            "fooB":fooB
      } %}
+    {{ fooC.name }}
+    {{ fooC.group[0]}}
+
+{# Note that if a property contains special characters (as dots or minus : myVariable.my-property 
+or myVariable.my.property) you'll need to use the attribute function to access it as normally that syntax would cause a Twig error : #}
+
+  {{ attribute(myVariable, 'my-property') }}
+
+   {{ attribute(myVariable, 'my.property') }}
 
 
+{# 2 -String interpolation #}
+ {% set name = "aaa" %}
+ {{ "hi #{name} , how are you" }}
 
+{# 3 -The loop variable inside a for loop and else tag #}
+  {% for item in items %}
+      {% if loop.last %}
+      
+      {% endif %}
+      
+  {% endfor %}
 
+  {# It becomes automatically a condition if the variable to iterate is empty. #}
+  <ul>
+    {% for user in users %}
+        <li>{{ user.username|e }}</li>
+    {% else %}
+        <li><em>no users available</em></li>
+    {% endfor %}
+</ul>
 
+{# 4 -iterable  #}
+{% if users is iterable %}
+  {% for user in users %}
+        Hello {{ user }}!
+    {% endfor %}
+{% else %}
+    {# users is probably a string #}
+    Hello {{ users }}!
+{% endif %}
 
+{# 5- Sometimes, when using nested loops, you need to access the parent context. 
+The parent context is always accessible via the loop.parent variable. For instance, if you have the following template data: #}
+
+{% set data = {
+    "topics":{
+        "topic1":["message 1 for topic 1","message 2 for topic 1"],
+        "topic2":["message 1 for topic 2","message 2 for topic 2"],
+    }
+} %}
     
+  {% for topic,messages in data.topics %}
+       {{ loop.index }}: {{ topic }}
+     {% for message in messages %}
+         {{ loop.parent.loop.index }}.{{ loop.index }}: {{ message }}
+     {% endfor %}
+      
+  {% endfor %}
+
+
+
 {% endblock %}
