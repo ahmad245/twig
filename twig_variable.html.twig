@@ -250,4 +250,20 @@ loop.first	True if first iteration
 loop.last	True if last iteration
 loop.length	The number of items in the sequence
 loop.parent	The parent context #}
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# What's the output of the following snippet? #}
+{{ {name: "Xavier", lastName: "Nemo", first: false, address: "P Sherman, 42 Wallaby Way, Sydney"} | first }}
+"Xavier"
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# The verbatim tag exists and allow you to write any Twig syntax inside the block
+, however this won't be parsed as twig but as Plain Text,  #}
+{% verbatim %}
+    <ul>
+    {% for row in rows %}
+        <li title="{{ rows.title }}">{{ rows.text }}</li>
+    {% endfor %}
+    </ul>
+{% endverbatim %}
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+
 {% endblock %}
