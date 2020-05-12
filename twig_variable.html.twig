@@ -368,4 +368,55 @@ https://ourcodeworld.com/articles/read/435/how-to-create-non-sequential-unique-i
 
 {# ow to implement a fuzzy search (fulltext) engine using TNTSearch in Symfony 5 #}
 https://ourcodeworld.com/articles/read/1124/how-to-implement-a-fuzzy-search-fulltext-engine-using-tntsearch-in-symfony-5
+
+ {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{# push an item to an array in Twig easily #}
+{% set myArray  = [] %}
+{% set myArray  = myArray|merge([1]) %}
+{% set myArray  = myArray|merge([2,3]) %}
+{% set myArray  = myArray|merge([4,5,6]) %}
+the output [1,2,3,4,5,6]
+{# Note that you can build any complex content using the same syntax: #}
+{% set myArray = [] %}
+
+{% set myArray = myArray|merge([
+    [1,2],
+    [3,4],
+    [5,6]
+]) %}
+
+{% set myArray = myArray|merge([
+    [
+        [1,2]
+    ],
+    [
+        [3,4]
+    ],
+]) %}
+ 
+{# 
+    The content of myArray is
+    myArray = [
+        [
+            1,2
+        ],
+        [
+            3,4
+        ],
+        [
+            5,6
+        ],
+        [
+            [1,2]
+        ],
+        [
+            [3,4]
+        ]
+    ]
+#}
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 {% endblock %}
+
+
+{# some links #}
+{# https://ourcodeworld.com/articles/read/652/how-to-create-a-dependent-select-dependent-dropdown-in-symfony-3 #}
