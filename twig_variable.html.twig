@@ -414,6 +414,28 @@ the output [1,2,3,4,5,6]
         ]
     ]
 #}
+
+{# Note that the original array in this case has an item #}
+{% set myArray = {
+    "first": 1
+} %}
+
+{% set myArray = myArray|merge({
+    "second": 2
+}) %}
+
+{% set myArray = myArray|merge({
+    "third": 3
+}) %}
+ 
+{# 
+    The content of myArray is
+    myArray = {
+        "first":1,
+        "second":2,
+        "third":3
+    }
+#}
 {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 {% endblock %}
 
