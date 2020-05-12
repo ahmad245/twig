@@ -264,6 +264,84 @@ loop.parent	The parent context #}
     {% endfor %}
     </ul>
 {% endverbatim %}
+the output is 
+<ul>
+    {% for row in rows %}
+        <li title="{{ rows.title }}">{{ rows.text }}</li>
+    {% endfor %}
+</ul>
 {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{% spaceless %}
+     <div   class="welcome-alert">
+        <h1 >Welcome David !</h1>
+    </div>
+{% endspaceless %}
+the output is <div   class="welcome-alert"><h1 >Welcome David !</h1></div>
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+. It's possible to use the same PHP constants in Twig by default
+{% set data = {
+    "Hey": "Ho",
+    "What": 12,
+    "Value" : true
+}%}
+{{data|json_encode(constant('JSON_PRETTY_PRINT'))}}
 
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+ How can you print a random value from an array with Twig?
+ {{ random([1,2,3]) }}
+
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+How can you print the value of the "a-b" attribute from the following key-value array?
+{% set MyVariable = {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "a-b": 4
+}%}
+the corecct is 
+{{MyVariable['a-b']}}
+or
+{{ attribute(MyVariable, 'a-b') }}
+
+{# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+ new inner scope. Variables set within this scope are not visible outside of the scope
+  {% with %}
+   {% set variableScop = 33 %}
+  {% endwith %}
+
+ {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+ How can you verify if 2 variables are identical (important identical not equal)
+ {% if variable is same as(variable2) %}{% endif %}
+ {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+{% if variable is same as(variable2) %}{% endif %}
+{% if a is divisible by(b) %}
+{% if a is iterable %}
+{% if a is empty %}
+{% if a is odd %}
+{% if a is defined %}{% endif %}
+
+ {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+The batch filter exists and split an existing array into chunks from the size of the integer providen as first argument (it can be a number in string format as well).
+{% set items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', "h"] %}
+
+<table>
+{% for row in items|batch(4) %} // each array of 4 element 
+    <tr>
+        {%- for column in row -%}
+            <td>{{ column }}</td>
+        {%- endfor -%}
+    </tr>
+{% endfor %}
+</table>
+
+thie output is 
+<table>
+    <tr><td>a</td><td>b</td><td>c</td><td>d</td></tr>
+    <tr><td>e</td><td>f</td><td>g</td><td>h</td></tr>
+</table>
+ {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+
+ {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+ 
+ {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
 {% endblock %}
