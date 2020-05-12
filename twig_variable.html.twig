@@ -442,8 +442,8 @@ the output [1,2,3,4,5,6]
    or 
    {{ render(controller('App\\Controller\\CommentController::add', { 'id': post.id })) }}
  {# ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
- form with any action should 
- {# {{form_start(form,{'action': path(path,{'id':id})})}}   #}
+ {# form with any action should  #}
+ {{form_start(form,{'action': path(path,{'id':id})})}}  
 {% endblock %}
 
 
